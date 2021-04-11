@@ -1,4 +1,4 @@
-use bevy::prelude::Color;
+use bevy::{ecs::system::EntityCommands, prelude::Color};
 use lyon::lyon_tessellation::{LineCap, LineJoin};
 use std::collections::HashMap;
 use std::str::FromStr;
@@ -251,7 +251,7 @@ pub trait StyleStrategy {
             _ => LineJoin::Miter,
         }
     }
-    fn component_decider(&self, _style: &SvgStyle, _sprite: &mut bevy::prelude::Commands) {}
+    fn component_decider(&self, _style: &SvgStyle, _sprite: &mut EntityCommands) {}
 }
 
 /// Used when loading whole SVG files as a single entity.

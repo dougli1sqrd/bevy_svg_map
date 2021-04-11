@@ -1,6 +1,6 @@
 use bevy_svg_map::{load_svg, load_svg_map, StyleStrategy, SvgStyle};
 
-use bevy::prelude::*;
+use bevy::{ecs::system::EntityCommands, prelude::*};
 
 struct MyStrategy;
 
@@ -20,8 +20,8 @@ impl StyleStrategy for CustomStrategy {
             _ => Color::RED,
         }
     }
-    fn component_decider(&self, style: &SvgStyle, comp: &mut Commands) {
-        comp.with(if style.stroke_opacity().unwrap() == 1.0 {
+    fn component_decider(&self, style: &SvgStyle, comp: &mut EntityCommands) {
+        comp.insert(if style.stroke_opacity().unwrap() == 1.0 {
             Collider::Solid
         } else {
             Collider::Scorable
@@ -37,7 +37,7 @@ impl Plugin for TestPlugin {
 }
 
 fn setup(
-    commands: &mut Commands,
+    mut commands: Commands,
     materials: ResMut<Assets<ColorMaterial>>,
     meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -45,7 +45,7 @@ fn setup(
 }
 
 fn setup_custom(
-    commands: &mut Commands,
+    mut commands: Commands,
     materials: ResMut<Assets<ColorMaterial>>,
     meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -53,7 +53,7 @@ fn setup_custom(
 }
 
 fn setup_whole_svg(
-    commands: &mut Commands,
+    mut commands: Commands,
     materials: ResMut<Assets<ColorMaterial>>,
     meshes: ResMut<Assets<Mesh>>,
 ) {
@@ -69,7 +69,7 @@ fn setup_whole_svg(
 }
 
 fn setup_with_shapes(
-    commands: &mut Commands,
+    mut commands: Commands,
     materials: ResMut<Assets<ColorMaterial>>,
     meshes: ResMut<Assets<Mesh>>,
 ) {
